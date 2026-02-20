@@ -804,6 +804,80 @@
             </div>
         </div>
 
+        <!-- Rotate PDF View -->
+        <div id="rotate-view" class="hidden max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+            <button class="back-btn mb-8 text-gray-500 hover:text-gray-900 font-medium flex items-center transition-colors">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to all tools
+            </button>
+
+            <div class="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden border border-gray-200">
+                <div id="rot-setup-area" class="p-8 text-center border-b border-gray-100">
+                    <div class="w-16 h-16 bg-[#a379c9] text-white rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Rotate PDF</h2>
+                    <p class="text-gray-500 text-sm mb-6">Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!</p>
+
+                    <div id="rot-dropzone" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:bg-purple-50 hover:border-[#a379c9] transition-colors cursor-pointer relative group max-w-2xl mx-auto">
+                        <input type="file" id="rot-file-input" multiple accept="application/pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                        <svg class="w-10 h-10 text-gray-400 mx-auto mb-2 group-hover:text-[#a379c9] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <p class="text-gray-600 font-medium">Click to select PDF files</p>
+                        <p class="text-gray-400 text-xs mt-1">or drag and drop them here</p>
+                    </div>
+                </div>
+
+                <div id="rot-workspace" class="hidden p-6 bg-gray-50">
+                    <div class="flex flex-wrap items-center justify-between mb-4 gap-4 bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center cursor-pointer text-sm font-semibold text-gray-700 hover:text-purple-700 transition-colors">
+                                <input type="checkbox" id="rot-select-all" class="w-4 h-4 text-[#a379c9] rounded border-gray-300 focus:ring-[#a379c9] mr-2">
+                                Select All
+                            </label>
+                            <button id="rot-rotate-selected-btn" class="bg-purple-50 border border-purple-200 hover:bg-purple-100 text-purple-700 px-3 py-1.5 rounded text-sm font-bold flex items-center transition-colors">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                                Rotate Selected
+                            </button>
+                        </div>
+                        <div class="flex items-center relative">
+                            <input type="file" id="rot-add-more-input" multiple accept="application/pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                            <button class="bg-[#a379c9] hover:bg-[#8e60b8] text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-colors shadow-sm">Add More PDFs</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 min-h-[300px]">
+                        <ul id="rot-file-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            <!-- Cards Injected via JS -->
+                        </ul>
+                    </div>
+
+                    <div class="mt-6 flex flex-col items-center">
+                        <button id="do-rot-btn" class="bg-[#a379c9] text-white px-8 py-3.5 rounded-xl font-bold shadow-lg hover:bg-[#8e60b8] transition-colors flex items-center justify-center disabled:opacity-70">
+                            Apply Rotation
+                        </button>
+                        <p id="rot-status" class="mt-3 text-sm text-center font-medium text-gray-600"></p>
+                        <a id="rot-download-btn" class="hidden mt-3 bg-green-500 text-white px-8 py-3.5 rounded-xl font-bold shadow-lg hover:bg-green-600 transition-colors text-center items-center justify-center cursor-pointer">
+                            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <span id="rot-download-text">Download Rotated PDFs</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Coming Soon Animated Popup -->
+    <div id="coming-soon-popup" class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 ease-out px-4">
+        <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm" id="coming-soon-backdrop"></div>
+        <div class="bg-white rounded-3xl p-8 shadow-2xl relative z-10 transform scale-95 transition-all duration-300 ease-out w-full max-w-sm text-center border border-gray-100" id="coming-soon-modal">
+            <div class="w-20 h-20 bg-yellow-50 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-5 shadow-inner">
+                <svg class="w-10 h-10 animate-[bounce_2s_infinite]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-extrabold text-gray-900 mb-2">Coming Soon!</h3>
+            <p class="text-[15px] text-gray-500 mb-8 leading-relaxed">We're working hard to bring you this feature. Check back a little later!</p>
+            <button id="close-popup-btn" class="bg-yellow-500 text-white px-8 py-3 rounded-xl font-bold shadow hover:bg-yellow-600 hover:shadow-md hover:-translate-y-0.5 transition-all w-full focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2">Got it!</button>
+        </div>
     </div>
 
     <script>
@@ -842,8 +916,8 @@
             { title: "PDF to JPG", desc: "Convert each PDF page into a JPG or extract all images contained in a PDF.", color: theme.yellow, icon: 'image' },
             { title: "JPG to PDF", desc: "Convert JPG images to PDF in seconds. Easily adjust orientation and margins.", color: theme.yellow, icon: 'image' },
             { title: "Sign PDF", desc: "Sign yourself or request electronic signatures from others.", color: theme.blue, icon: 'sign' },
-            { title: "Watermark", desc: "Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position.", color: theme.pink, icon: 'stamp', extraClass: 'border-pink-300 shadow-[0_0_15px_rgba(197,110,181,0.2)]' },
-            { title: "Rotate PDF", desc: "Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!", color: theme.purple, icon: 'rotate' },
+            { title: "Watermark", desc: "Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position.", color: theme.pink, icon: 'stamp' },
+            { title: "Rotate PDF", desc: "Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!", color: theme.purple, icon: 'rotate', extraClass: 'border-purple-300 shadow-[0_0_15px_rgba(163,121,201,0.2)]' },
             { title: "HTML to PDF", desc: "Convert webpages in HTML to PDF. Copy and paste the URL of the page you want and convert it to PDF with a click.", color: theme.yellow, icon: 'code' },
             { title: "Unlock PDF", desc: "Remove PDF password security, giving you the freedom to use your PDFs as you want.", color: theme.blue, icon: 'unlock' },
             { title: "Protect PDF", desc: "Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.", color: theme.blue, icon: 'lock' },
@@ -855,7 +929,7 @@
         ];
 
         const categoryFilters = {
-            'Organize PDF': ["Merge PDF", "Split PDF", "Organize PDF"],
+            'Organize PDF': ["Merge PDF", "Split PDF", "Organize PDF", "Rotate PDF"],
             'Optimize PDF': ["Compress PDF", "Repair PDF", "OCR PDF"],
             'Convert PDF': ["PDF to JPG", "JPG to PDF", "HTML to PDF"],
             'Edit PDF': ["Edit PDF", "Watermark", "Rotate PDF", "Page numbers", "Crop PDF"],
@@ -960,8 +1034,38 @@
         const j2pView = document.getElementById('jpg-to-pdf-view');
         const signView = document.getElementById('sign-view');
         const watermarkView = document.getElementById('watermark-view');
+        const rotateView = document.getElementById('rotate-view');
         
+        // Coming Soon Popup Logic
+        const comingSoonPopup = document.getElementById('coming-soon-popup');
+        const comingSoonModal = document.getElementById('coming-soon-modal');
+        const comingSoonBackdrop = document.getElementById('coming-soon-backdrop');
+        const closePopupBtn = document.getElementById('close-popup-btn');
+
+        function showComingSoonPopup() {
+            comingSoonPopup.classList.remove('opacity-0', 'pointer-events-none');
+            comingSoonPopup.classList.add('opacity-100');
+            comingSoonModal.classList.remove('scale-95');
+            comingSoonModal.classList.add('scale-100');
+        }
+
+        function hideComingSoonPopup() {
+            comingSoonPopup.classList.remove('opacity-100');
+            comingSoonPopup.classList.add('opacity-0', 'pointer-events-none');
+            comingSoonModal.classList.remove('scale-100');
+            comingSoonModal.classList.add('scale-95');
+        }
+
+        closePopupBtn.addEventListener('click', hideComingSoonPopup);
+        comingSoonBackdrop.addEventListener('click', hideComingSoonPopup);
+
         function openToolView(title) {
+            // Intercept for Coming Soon features
+            if (title === 'HTML to PDF') {
+                showComingSoonPopup();
+                return;
+            }
+
             mainView.classList.add('hidden');
             mergeView.classList.add('hidden');
             splitView.classList.add('hidden');
@@ -971,6 +1075,7 @@
             j2pView.classList.add('hidden');
             signView.classList.add('hidden');
             watermarkView.classList.add('hidden');
+            rotateView.classList.add('hidden');
 
             if (title === 'Merge PDF') {
                 mergeView.classList.remove('hidden');
@@ -1004,6 +1109,10 @@
                 watermarkView.classList.remove('hidden');
                 resetWmWorkspace();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (title === 'Rotate PDF') {
+                rotateView.classList.remove('hidden');
+                resetRotWorkspace();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 mainView.classList.remove('hidden'); 
             }
@@ -1035,6 +1144,7 @@
                 j2pView.classList.add('hidden');
                 signView.classList.add('hidden');
                 watermarkView.classList.add('hidden');
+                rotateView.classList.add('hidden');
                 mainView.classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 if(btn.id === 'logo-link') document.querySelector('#page-nav button').click(); 
@@ -2798,6 +2908,189 @@
                 wmSaveBtn.disabled = false;
                 wmSaveBtn.innerHTML = `<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> Add Watermark`;
                 wmFabricCanvas.setActiveObject(wmWatermarkObj); // re-select
+            }
+        });
+
+        // ==========================================
+        // --- ROTATE PDF WORKSPACE LOGIC ---
+        // ==========================================
+        const rotDropzone = document.getElementById('rot-dropzone');
+        const rotFileInput = document.getElementById('rot-file-input');
+        const rotAddMoreInput = document.getElementById('rot-add-more-input');
+        const rotFileList = document.getElementById('rot-file-list');
+        const rotSelectAll = document.getElementById('rot-select-all');
+        const rotRotateSelectedBtn = document.getElementById('rot-rotate-selected-btn');
+        
+        const doRotBtn = document.getElementById('do-rot-btn');
+        const rotDownloadBtn = document.getElementById('rot-download-btn');
+        const rotDownloadText = document.getElementById('rot-download-text');
+        const rotStatus = document.getElementById('rot-status');
+        const rotWorkspace = document.getElementById('rot-workspace');
+
+        let rotFilesMap = new Map();
+        let rotFileIdCounter = 0;
+
+        function resetRotWorkspace() {
+            rotFilesMap.clear();
+            rotFileList.innerHTML = '';
+            rotFileInput.value = '';
+            rotAddMoreInput.value = '';
+            rotWorkspace.classList.add('hidden');
+            rotDownloadBtn.classList.add('hidden');
+            rotStatus.innerText = '';
+            rotSelectAll.checked = false;
+        }
+
+        function renderRotateList() {
+            rotFileList.innerHTML = '';
+            rotFilesMap.forEach((data, id) => {
+                const li = document.createElement('li');
+                li.className = 'border border-gray-200 rounded-lg p-3 relative flex flex-col items-center justify-center group hover:shadow-md transition-shadow bg-white';
+                
+                const rotationStyle = `transform: rotate(${data.angle}deg); transition: transform 0.3s ease;`;
+                
+                li.innerHTML = `
+                    <div class="absolute top-2 left-2 z-10">
+                        <input type="checkbox" class="rot-item-cb w-4 h-4 text-[#a379c9] rounded border-gray-300 focus:ring-[#a379c9] cursor-pointer" data-id="${id}" ${data.selected ? 'checked' : ''}>
+                    </div>
+                    <button class="rot-remove-btn absolute top-2 right-2 text-gray-300 hover:text-red-500 transition-colors p-1" data-id="${id}">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                    
+                    <div class="w-16 h-20 bg-gray-50 border border-gray-200 shadow-sm flex items-center justify-center mb-3 mt-4" style="${rotationStyle}">
+                        <span class="text-xs font-bold text-gray-300 select-none">PDF</span>
+                    </div>
+                    
+                    <p class="text-[11px] font-medium text-gray-600 truncate w-full text-center px-1" title="${data.file.name}">${data.file.name}</p>
+                    <p class="text-[10px] text-gray-400 text-center mt-0.5">${data.angle}°</p>
+                    
+                    <div class="mt-3 flex w-full">
+                        <button class="rot-single-rotate-btn bg-gray-50 border border-gray-200 text-gray-600 hover:text-[#a379c9] hover:bg-purple-50 w-full py-1.5 rounded text-xs transition-colors flex items-center justify-center font-medium" data-id="${id}">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg> Rotate
+                        </button>
+                    </div>
+                `;
+                rotFileList.appendChild(li);
+            });
+            
+            if(rotFilesMap.size > 0) {
+                rotWorkspace.classList.remove('hidden');
+                rotDownloadBtn.classList.add('hidden');
+                rotStatus.innerText = '';
+            } else {
+                rotWorkspace.classList.add('hidden');
+            }
+        }
+
+        function handleRotFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type !== 'application/pdf') return alert(`${file.name} is not a valid PDF file.`);
+                const id = rotFileIdCounter++;
+                rotFilesMap.set(id, { file: file, angle: 0, selected: false });
+            });
+            renderRotateList();
+        }
+
+        rotFileInput.addEventListener('change', (e) => handleRotFiles(e.target.files));
+        rotAddMoreInput.addEventListener('change', (e) => handleRotFiles(e.target.files));
+        
+        rotDropzone.addEventListener('dragover', (e) => { e.preventDefault(); rotDropzone.classList.add('bg-purple-50', 'border-[#a379c9]'); });
+        rotDropzone.addEventListener('dragleave', () => rotDropzone.classList.remove('bg-purple-50', 'border-[#a379c9]'));
+        rotDropzone.addEventListener('drop', (e) => { e.preventDefault(); rotDropzone.classList.remove('bg-purple-50', 'border-[#a379c9]'); handleRotFiles(e.dataTransfer.files); });
+
+        // Interactions within the list
+        rotFileList.addEventListener('change', (e) => {
+            if(e.target.classList.contains('rot-item-cb')) {
+                const id = parseInt(e.target.dataset.id);
+                const data = rotFilesMap.get(id);
+                if(data) data.selected = e.target.checked;
+            }
+        });
+
+        rotSelectAll.addEventListener('change', (e) => {
+            const checked = e.target.checked;
+            rotFilesMap.forEach(data => data.selected = checked);
+            renderRotateList();
+        });
+
+        rotRotateSelectedBtn.addEventListener('click', () => {
+            rotFilesMap.forEach(data => {
+                if(data.selected) data.angle = (data.angle + 90) % 360;
+            });
+            renderRotateList();
+        });
+
+        rotFileList.addEventListener('click', (e) => {
+            const rotBtn = e.target.closest('.rot-single-rotate-btn');
+            if(rotBtn) {
+                const id = parseInt(rotBtn.dataset.id);
+                const data = rotFilesMap.get(id);
+                if(data) {
+                    data.angle = (data.angle + 90) % 360;
+                    renderRotateList();
+                }
+            }
+            const rmBtn = e.target.closest('.rot-remove-btn');
+            if(rmBtn) {
+                const id = parseInt(rmBtn.dataset.id);
+                rotFilesMap.delete(id);
+                renderRotateList();
+            }
+        });
+
+        doRotBtn.addEventListener('click', async () => {
+            if (rotFilesMap.size === 0) return;
+            try {
+                doRotBtn.disabled = true;
+                doRotBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Applying Rotation...`;
+                rotStatus.innerText = 'Processing your files...';
+                rotDownloadBtn.classList.add('hidden');
+
+                const { PDFDocument, degrees } = PDFLib;
+                const zip = new JSZip();
+
+                for (let [id, data] of rotFilesMap.entries()) {
+                    const buffer = await data.file.arrayBuffer();
+                    const pdfDoc = await PDFDocument.load(buffer);
+                    const pages = pdfDoc.getPages();
+                    
+                    if (data.angle !== 0) {
+                        pages.forEach(page => {
+                            const currentAngle = page.getRotation().angle;
+                            page.setRotation(degrees((currentAngle + data.angle) % 360));
+                        });
+                    }
+                    
+                    const pdfBytes = await pdfDoc.save();
+                    
+                    if (rotFilesMap.size === 1) {
+                        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                        rotDownloadBtn.href = URL.createObjectURL(blob);
+                        rotDownloadBtn.download = `Rotated_${data.file.name}`;
+                        rotDownloadText.innerText = "Download Rotated PDF";
+                    } else {
+                        zip.file(`Rotated_${data.file.name}`, pdfBytes);
+                    }
+                }
+
+                if (rotFilesMap.size > 1) {
+                    rotStatus.innerText = 'Zipping files...';
+                    const zipBlob = await zip.generateAsync({ type: "blob" });
+                    rotDownloadBtn.href = URL.createObjectURL(zipBlob);
+                    rotDownloadBtn.download = `Rotated_PDFs.zip`;
+                    rotDownloadText.innerText = "Download ZIP File";
+                }
+
+                rotDownloadBtn.classList.remove('hidden');
+                rotDownloadBtn.classList.add('flex');
+                rotStatus.innerHTML = `<span class="text-green-600 font-bold">Success!</span> Click below to download.`;
+
+            } catch (err) {
+                console.error("Rotation error:", err);
+                rotStatus.innerHTML = `<span class="text-red-500 font-bold">Error:</span> Could not rotate files.`;
+            } finally {
+                doRotBtn.disabled = false;
+                doRotBtn.innerText = 'Apply Rotation';
             }
         });
 
